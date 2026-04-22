@@ -33,7 +33,7 @@ print(respuesta)
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_ollama import OllamaLLM
 
-llm = OllamaLLM(model="llama3")
+""" llm = OllamaLLM(model="llama3")
 prompt = ChatPromptTemplate.from_messages([
     ("system", "Eres un psicologo que atiende en espanol, y se especializaa en {temas} "),
   MessagesPlaceholder(variable_name="historia"),
@@ -69,3 +69,17 @@ config={"configurable": {"session_id": "abc123"}},),
 Respuesta=with_message_history.invoke({"consulta": "Haceme acordar, cual es mi pelicula favorita, y a quien odio ? ya te lo dije antes ", "temas": "sueño, ansiedad, pesadillas"},
 config={"configurable": {"session_id": "abc123"}},),
 print(Respuesta)
+ """
+
+from langchain_community.tools import WikipediaQueryRun
+from langchain_community.utilities import WikipediaAPIWrapper
+
+api_wrapper = WikipediaAPIWrapper(top_k_results=1, doc_content_chars_max=250) 
+""" Que me devuelva el mejor resultado, con un maximo de 250 caracteres """
+tool = WikipediaQueryRun(api_wrapper=api_wrapper)
+
+""" print(tool.name)
+print(tool.description)
+print(tool.args) """
+
+print (tool.run("Peñarol"))
